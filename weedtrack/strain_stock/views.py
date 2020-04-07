@@ -22,14 +22,12 @@ class CreateListRetrieveViewSet(mixins.CreateModelMixin,
 class StrainStockViewset(CreateListRetrieveViewSet):
     serializer_class = StrainStockSerializer
 
-    def create(self, request):
-        serializer = self.get_serializer(data=request.data, many=False)
-        if serializer.is_valid(raise_exception=True):
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
-        return Response(serializer.errors)
-    
+    def perform_create(self, serializer):
+        strainStock = serializer.save()
+        print(serializer.validated_data)
+        op = StrainOperation(user=self.request.user, strain=strainStock, quantity=serializer.validated_data['quantity'])
+        op.save()
+   
     def get_queryset(self):
         user = self.request.user
         items = StrainStock.objects.filter(user=user)
@@ -44,3 +42,8 @@ class StrainOperationViewset(CreateListRetrieveViewSet):
         items = StrainOperation.objects.filter(user=user)
         return items
 
+    def perform_create(self, serializer):
+        serializer.save()
+        strain = StrainStock.objects.filter(pk=serializer.data['strain'])
+        strainobj = strain.first()
+        strain.update(quantity=strainobj.quantity + serializer.data['quantity'])

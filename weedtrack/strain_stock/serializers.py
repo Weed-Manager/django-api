@@ -15,7 +15,6 @@ class StrainStockIncludeSerializer(serializers.ModelSerializer):
 
 
 class StrainOperationSerializer(serializers.ModelSerializer):
-    strain = StrainStockIncludeSerializer(many=False, read_only=True)
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:

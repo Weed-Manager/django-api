@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from .models import User    
+from .models import User
 from .permissions import IsUserOrReadOnly
 from .serializers import CreateUserSerializer, UserSerializer
 
@@ -51,4 +51,3 @@ class TokenValidateView(APIView):
             return Response({'user': None}, status.HTTP_401_UNAUTHORIZED)
         serializer = UserSerializer(u)
         return Response({serializer.data})
-
