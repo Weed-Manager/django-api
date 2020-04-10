@@ -4,7 +4,7 @@ from weedtrack.users.models import User
 # Create your models here.
 
 class StrainStock(models.Model):
-    strainName = models.CharField(max_length=255, null=False)
+    strain_name = models.CharField(max_length=255, null=False)
     quantity = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

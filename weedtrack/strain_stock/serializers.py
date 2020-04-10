@@ -4,15 +4,14 @@ from .models import StrainOperation, StrainStock
 class StrainStockSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
+    def validate_strain_name(self, value):
+        if StrainStock.objects.filter(strain_name=value).exists():
+            raise serializers.ValidationError("Can't have two strains of the same name")
+        return value
+
     class Meta:
         model = StrainStock
-        fields = ["id", "strainName", "quantity", "user"]
-
-class StrainStockIncludeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StrainStock
-        fields = ["id", "strainName"]
-
+        fields = ["id", "strain_name", "quantity", "user"]
 
 class StrainOperationSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())

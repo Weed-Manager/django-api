@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.exceptions import ValidationError
 from rest_framework import generics, status, mixins, viewsets
 from rest_framework.response import Response
 from .models import StrainStock, StrainOperation
@@ -24,14 +25,12 @@ class StrainStockViewset(CreateListRetrieveViewSet):
 
     def perform_create(self, serializer):
         strainStock = serializer.save()
-        print(serializer.validated_data)
         op = StrainOperation(user=self.request.user, strain=strainStock, quantity=serializer.validated_data['quantity'])
         op.save()
-   
+
     def get_queryset(self):
         user = self.request.user
         items = StrainStock.objects.filter(user=user)
-        print(user)
         return items
 
 class StrainOperationViewset(CreateListRetrieveViewSet):
@@ -47,3 +46,4 @@ class StrainOperationViewset(CreateListRetrieveViewSet):
         strain = StrainStock.objects.filter(pk=serializer.data['strain'])
         strainobj = strain.first()
         strain.update(quantity=strainobj.quantity + serializer.data['quantity'])
+
