@@ -20,7 +20,7 @@ class CreateListRetrieveViewSet(mixins.CreateModelMixin,
     """
     pass
 
-class StrainStockViewset(CreateListRetrieveViewSet):
+class StrainStockViewset(CreateListRetrieveViewSet, mixins.DestroyModelMixin):
     serializer_class = StrainStockSerializer
 
     def perform_create(self, serializer):
