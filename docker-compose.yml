@@ -6,7 +6,8 @@ services:
   web:
     restart: always
     environment:
-      - DJANGO_SECRET_KEY=local
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - IS_SQLITE=${IS_SQLITE}
     image: web
     build: ./
     command: >

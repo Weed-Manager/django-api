@@ -13,9 +13,7 @@ class Common(Configuration):
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-
+        'django.contrib.messages', 'django.contrib.staticfiles',
 
         # Third party apps
         'rest_framework',            # utilities for rest apis
@@ -51,13 +49,24 @@ class Common(Configuration):
         ('Author', 'clement.peau@gmail.com '),
     )
 
-    # Postgres
-    DATABASES = {
-        'default': dj_database_url.config(
-            default='postgres://postgres:@postgres:5432/postgres',
-            conn_max_age=int(os.getenv('POSTGRES_CONN_MAX_AGE', 600))
-        )
-    }
+    if strtobool(os.getenv('IS_SQLITE', 'yes')):
+        # Sqlite
+        print('Using SQLITE')
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': 'testdb',
+            }
+        }
+    else:
+        print('Using postgres')
+        # Postgres
+        DATABASES = {
+            'default': dj_database_url.config(
+                default='postgres://postgres:@postgres:5432/postgres',
+                conn_max_age=int(os.getenv('POSTGRES_CONN_MAX_AGE', 600))
+            )
+        }
 
     # General
     APPEND_SLASH = False
