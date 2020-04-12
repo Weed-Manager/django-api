@@ -28,26 +28,10 @@ class UserCreateViewSet(mixins.CreateModelMixin,
     serializer_class = CreateUserSerializer
     permission_classes = (AllowAny,)
 
-class TokenValidationView(APIView):
+class GetCurrentUserView(APIView):
     def get(self, request, format=None):
-        token = request.META.get('HTTP_AUTHORIZATION', '')
-        print('token' + token)
-        print(request.data)
-        try:
-            user = Token.objects.get(key=token).user
-        except Exception as e:
-            return Response({'user': None}, status=status.HTTP_401_UNAUTHORIZED)
-        serializer = UserSerializer(user)
-        return Response({'user': {**serializer.data, 'token': token}})
-
-
-class TokenValidateView(APIView):
-    def get(self, request):
-        token = request.data.get('Authorization', '')
-        if not token:
-            return Response({'user': None}, status=status.HTTP_400_BAD_REQUEST)
-        u = User.objects.get(token=token)
-        if not u:
-            return Response({'user': None}, status.HTTP_401_UNAUTHORIZED)
-        serializer = UserSerializer(u)
-        return Response({serializer.data})
+        user = request.user
+        if user: 
+            serializer = UserSerializer(user)
+            return (Response({'user': serializer.data}, status=status.HTTP_200_OK))
+        return Response({'user': None}, status=status.HTTP_401_UNAUTHORIZED)
