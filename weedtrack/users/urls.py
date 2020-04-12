@@ -10,6 +10,6 @@ router.register('users', UserCreateViewSet, basename='users')
 
 urlpatterns = [ 
     
-    path('users/validate/', GetCurrentUserView.as_view())
+    path('users/profile/', GetCurrentUserView.as_view())
 ]
 urlpatterns += router.urls

@@ -40,6 +40,32 @@ Content-Type application/json
 The `auth_token` returned with this response should be stored by the client for
 authenticating future requests to the API. See [Authentication](authentication.md).
 
+## Get current user's profile information
+
+**Request**:
+
+`GET` `/users/profile`
+
+Parameters:
+
+*Note:*
+
+- **[Authorization Protected](authentication.md)**
+
+**Response**:
+
+```json
+Content-Type application/json
+200 OK
+
+{
+  "id": "6d5f9bae-a31b-4b7b-82c4-3853eda2b011",
+  "username": "richard",
+  "first_name": "Richard",
+  "last_name": "Hendriks",
+}
+```
+
 
 ## Get a user's profile information
 
