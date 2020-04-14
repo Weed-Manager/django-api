@@ -33,5 +33,5 @@ class GetCurrentUserView(APIView):
         user = request.user
         if user: 
             serializer = UserSerializer(user)
-            return (Response(serializer.validated_data, status=status.HTTP_200_OK))
+            return (Response(serializer.data, status=status.HTTP_200_OK))
         return Response({'user': None}, status=status.HTTP_401_UNAUTHORIZED)
