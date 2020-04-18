@@ -11,12 +11,12 @@ class StrainStockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StrainStock
-        fields = ["id", "strain_name", "quantity", "user"]
+        fields = ["id", "strain_name", "quantity", "user", "created_at"]
 
 class StrainOperationSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = StrainOperation
-        fields = ["id", "strain", "user", "quantity"]
+        fields = ["id", "strain", "user", "quantity", "created_at"]
 

@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('weedtrack.strain_stock.urls')),
     path('api/', include('weedtrack.users.urls')),
+    path('api/', include('weedtrack.stats.urls')),
     path('api-token-auth/', views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

@@ -5,7 +5,7 @@ Supports getting a list, getting a detailed object and creating strainoperations
 
 **Request**:
 
-POST /operations/
+POST api/operations/
 
 Parameters:
 
@@ -36,7 +36,7 @@ Content-Type application/json
 
 **Request**:
 
-DELETE /operations/{operation_id}
+DELETE /operations/{operation_id}/
 
 Parameters:
 
@@ -53,11 +53,5 @@ None
 ```json
 Content-Type application/json
 204 NO CONTENT
-
-{
-    "id": 1,
-    "strain": "1",
-    "quantity": -0.15
-}
 ```
 
