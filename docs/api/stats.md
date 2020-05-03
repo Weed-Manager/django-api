@@ -80,3 +80,70 @@ Content-Type application/json
 	"total_caps": 1
 }
 ```
+
+## Getting total capsule operation in a date range
+
+**Request**
+
+GET /api/stats/consumption/
+
+Query parameters:
+
+Name       | Type   | Required | Description
+-----------|--------|----------|------------
+start_date | date   | Yes      | the start date 
+end_date   | date   | Yes      | the end date
+
+**Response**
+```json
+Content-Type application/json
+200 OK 
+{
+	"quantity": 2,
+	"items": [
+		{
+		  "id": "1",
+		  "strain": "1",
+		  "quantity": "-0.15"
+		  "created_at": "2020-04-18T17:46:54+0000"
+		},
+		{
+		  "id": "2",
+		  "strain": "1",
+		  "quantity": "-0.15"
+		  "created_at": "2020-04-18T20:46:54+0000"
+		}
+	]
+}
+```
+
+## Getting total capsule operation in a date range grouped_by day/week/month
+**Request**
+
+GET /api/stats/consumption_by_split/
+
+Query parameters:
+
+Name       | Type   | Required | Description
+-----------|--------|----------|------------
+start_date | date   | Yes      | the start date 
+end_date   | date   | Yes      | the end date
+split      | string | Yes      | the desired split day/week/month 
+
+**Response**
+```json
+Content-Type application/json
+200 OK 
+{
+	"items": [
+		{
+		  "day": "2020-04-18T00:00:00Z"
+		  "quantity": "-0.15"
+		},
+		{
+		  "day": "2020-04-19T00:00:00Z"
+		  "quantity": "-0.90"
+		}
+	]
+}
+```
